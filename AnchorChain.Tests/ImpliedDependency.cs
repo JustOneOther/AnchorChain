@@ -1,5 +1,5 @@
-﻿// Uncomment following line to activate SD tests
-// #define ID
+﻿// Uncomment following line to activate ID tests
+#define ID
 #if ID
 
 using UnityEngine;

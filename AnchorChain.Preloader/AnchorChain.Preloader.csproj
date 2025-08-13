@@ -28,7 +28,10 @@
             <HintPath>..\Dll\UnityEngine.CoreModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
-
+        <Reference Include="com.rlabrecque.steamworks.net">
+            <HintPath>..\Dll\com.rlabrecque.steamworks.net.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
 
 </Project>

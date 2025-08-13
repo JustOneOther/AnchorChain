@@ -1,5 +1,5 @@
 ﻿// Uncomment following line to activate SD tests
-// #define LO
+#define LO
 #if LO
 
 using UnityEngine;
@@ -78,7 +78,7 @@ public class LoadOrder7: IAnchorChainMod
 {
 	public void TriggerEntryPoint()
 	{
-		Debug.Log("LO 1 Loaded");
+		Debug.Log("LO 7 Loaded");
 	}
 }
 
@@ -87,7 +87,7 @@ public class LoadOrder8: IAnchorChainMod
 {
 	public void TriggerEntryPoint()
 	{
-		Debug.Log("LO 1 Loaded");
+		Debug.Log("LO 8 Loaded");
 	}
 }
 
@@ -96,7 +96,7 @@ public class LoadOrder9: IAnchorChainMod
 {
 	public void TriggerEntryPoint()
 	{
-		Debug.Log("LO 1 Loaded");
+		Debug.Log("LO 9 Loaded");
 	}
 }
 

@@ -1,4 +1,4 @@
-﻿// Uncomment following line to activate CLO tests
+﻿// Uncomment following line to activate CL tests
 #define Config
 #if Config
 
