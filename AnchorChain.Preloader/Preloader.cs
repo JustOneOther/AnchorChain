@@ -1,6 +1,9 @@
-﻿using BepInEx;
+﻿using System.Collections;
+using BepInEx;
 using Steamworks;
 using System.Reflection;
+using HarmonyLib;
+using SeaPower;
 
 namespace AnchorChain.Preloader;
 
@@ -8,6 +11,9 @@ namespace AnchorChain.Preloader;
 [BepInPlugin("io.github.seapower_modders.anchorchain_preloader", "AnchorChain Preloader", "1.0.1")]
 public class AnchorChainPreloader: BaseUnityPlugin
 {
+	private static IPluginLoader _pluginLoader;
+
+
 	private void Awake()
 	{
 		Logger.LogInfo("AnchorChain Preloader started!");
@@ -31,13 +37,31 @@ public class AnchorChainPreloader: BaseUnityPlugin
 				select x).FirstOrDefault();
 
 			if (chainLoader is null) { Logger.LogError($"AnchorChain .dll at {possiblePath} missing ChainLoader"); }
-			else { ((IPluginLoader) Activator.CreateInstance(chainLoader)).LoadPlugins(); }
+			else {
+				_pluginLoader = ((IPluginLoader) Activator.CreateInstance(chainLoader));
+
+				Harmony harmony = new Harmony("io.github.seapower_modders.anchorchain_preloader");
+				harmony.Patch(
+					typeof(FileManager).GetMethod("CheckCompatibility"),
+					postfix: new HarmonyMethod(typeof(AnchorChainPreloader).GetMethod("Patch"))
+					);
+			}
 
 			Logger.LogInfo("AnchorChain preloader finished");
 		}
 		catch (Exception e) {
 			Logger.LogError($"Failed to initialize AnchorChain with error: {e}");
 		}
+	}
+
+
+	public static IEnumerator Patch(IEnumerator coroutine)
+	{
+		while (coroutine.MoveNext()) {
+			yield return coroutine.Current;
+		}
+
+		_pluginLoader.LoadPlugins();
 	}
 }
 
